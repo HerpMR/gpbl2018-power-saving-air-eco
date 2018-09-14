@@ -4,7 +4,58 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin: 20px 20px;
 }
+
+.Holder {
+  height: 100vh;
+  width: 100vw;
+  /* border-radius: 50%; */
+  /* background: #73AD21; */
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+}
+
+.Sub-Holder {
+  min-width: 300px;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.Sub-Holder:hover {
+  /* background: red; */
+  /* transform: scale(1.1); */
+}
+
+.Item {
+  height: 120px;
+  width: 100px;
+  border-radius: 10px;
+  background: #4CAF50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  flex-grow: 3;
+}
+
+.Item span {
+  text-align: center;
+  font-size: 20px;
+}
+
+.Simple-Slider {
+  width: 300px;
+}
+
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;

@@ -31,7 +31,7 @@ io.on('connection', function (socket) {
   socket.on('subscribeToTimer', (interval) => {
     setInterval(() => {
       io.emit('timer', new Date().getTime());
-      // io.emit('people', log.getNoOfPeopleFromFile())
+      io.emit('people', log.getNoOfPeopleFromFile());
     }, interval);
   });
 });
@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
 
 app.post("/motion", async (req, res) => {
   console.log(req.query);
-  await log.WriteSensorLog(req.query,log.motion_sensor_filename); 
+  req.query && req.query.count && log.writePeopleFile(req.query.count); 
   res.send("ok");
 });
 

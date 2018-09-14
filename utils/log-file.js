@@ -35,24 +35,12 @@ const calculateNumberOfPeople = (data) => {
     return 0;
 }
 
+
 const getNoOfPeopleFromFile = () => {
     try {
-        // const prevData = JSON.parse(fs.readFileSync(people_filename).toString());
-        console.log('here')
-        const prevData = JSON.parse(fs.readFileSync(motion_sensor_filename).toString());
-        console.log(prevData.length)
-        let count = 0;
-        for (let i = 0; i < prevData.length ; i = i + 4) {
-            console.log(i)
-            count = count + calculateNumberOfPeople(prevData.slice(i, i + 4))
-
-        }
-        console.log('count',count)
-        return count;
-
+        const prevData = JSON.parse(fs.readFileSync(people_filename).toString());
+        return prevData.noOfPeople;
     } catch (error) {
-        console.log('count error')
-        console.log(error)
         fs.writeFileSync(people_filename, JSON.stringify({noOfPeople: 0}), 'utf8', function (err) {
             if (err) {
                 return console.log(err);
@@ -60,6 +48,28 @@ const getNoOfPeopleFromFile = () => {
         });
     }
     return 0;
+}
+
+const writePeopleFile = (count) => {
+     try {
+        const prevData = JSON.parse(fs.readFileSync(people_filename).toString());
+        let result = prevData ? parseInt(prevData.noOfPeople) + parseInt(count) : parseInt(count);
+        result < 0 && (result = 0);
+        fs.writeFileSync(people_filename, JSON.stringify({noOfPeople: result}), 'utf8', function (err) {
+             if (err) {
+                 return console.log(err);
+             }
+         });
+     } catch (error) {
+         console.log(error)
+         fs.writeFileSync(people_filename, JSON.stringify({
+             noOfPeople: 0
+         }), 'utf8', function (err) {
+             if (err) {
+                 return console.log(err);
+             }
+         });
+     }
 }
 
 const WriteSensorLog = async (data, filename) => {
@@ -100,5 +110,6 @@ module.exports = {
     WriteSensorLog,
     ReadSensorLog,
     calculateNumberOfPeople,
-    getNoOfPeopleFromFile
+    getNoOfPeopleFromFile,
+    writePeopleFile
 }

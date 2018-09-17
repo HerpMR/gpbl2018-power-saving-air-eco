@@ -3,6 +3,44 @@ const fs = require('fs');
 const temp_sensor_filename = "./logs/temp-sensor-logs.txt";
 const motion_sensor_filename = "./logs/motion-sensor-logs.txt";
 const people_filename = "./logs/number-of-people-logs.txt";
+const air_curr_filename = "./logs/air-curr-temp.txt";
+
+
+const getAirCurrentTemp = () => {
+    try {
+        const prevData = JSON.parse(fs.readFileSync(air_curr_filename).toString());
+        return prevData.airCurrentTemp;
+    } catch (error) {
+        fs.writeFileSync(air_curr_filename, JSON.stringify({
+            airCurrentTemp: 0
+        }), 'utf8', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
+    return 0;
+}
+
+const writeAirCurrentTemp = (temp) => {
+    try {
+        fs.writeFileSync(air_curr_filename, JSON.stringify({
+            airCurrentTemp: temp
+        }), 'utf8', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    } catch (error) {
+        fs.writeFileSync(people_filename, JSON.stringify({
+            airCurrentTemp: 0
+        }), 'utf8', function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
+}
 
 const calculateNumberOfPeople = (data) => {
     try {
@@ -111,5 +149,7 @@ module.exports = {
     ReadSensorLog,
     calculateNumberOfPeople,
     getNoOfPeopleFromFile,
-    writePeopleFile
+    writePeopleFile,
+    getAirCurrentTemp,
+    writeAirCurrentTemp
 }
